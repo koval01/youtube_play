@@ -1,8 +1,80 @@
-<video autoplay controls>
-  <source src="https://rr3---sn-5hne6ns6.googlevideo.com/videoplayback?expire=1664568855&ei=t_k2Y6nPIeLbsAKA9LPgDw&ip=54.76.9.42&id=o-AMU6sRK2OZOKyjkM6gpRWL-b0uzYO8fNs7WugoulN5fC&itag=248&source=youtube&requiressl=yes&mh=LS&mm=31%2C26&mn=sn-5hne6ns6%2Csn-4g5lznl7&ms=au%2Conr&mv=u&mvi=3&pl=24&spc=yR2vp4D9KYREqCX_k9Vhsf-PPQEQopc&vprv=1&svpuc=1&mime=video%2Fwebm&gir=yes&clen=495721586&dur=3774.400&lmt=1663166570006469&mt=1664546638&fvip=3&keepalive=yes&fexp=24001373%2C24007246&c=ANDROID&txp=5535434&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRQIgQLKDmdg1vHmUFzjoIxDsmbQHw3fS9VtptquzchpIi5ICIQC-RGtLCHLAUR6_YhbfPER-_0nIp6lCWK0AJVnTO3fFqQ%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl&lsig=AG3C_xAwRAIgJmU3EK5WHBaUPYbcfXh-RMz_lkq57zsFc8i3mZg3jfICICD7UQBTHifR_G3zwJnDZK4BAtSiLsqrjDLDNKX8nQ5m" type="video/mp4">
-</video>
-
-<div class="content">
-  <h1>hesd</h1>
-  <p>desc</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>YouTube Player</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="Koval Yaroslav">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1.0">
+    <!--  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">-->
+    <!--  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">-->
+    <!--  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">-->
+    <!--  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/android-chrome-192x192.png">-->
+    <!--  <link rel="icon" type="image/png" sizes="512x512" href="assets/favicon/android-chrome-512x512.png">-->
+    <!--  <link rel="manifest" href="assets/favicon/site.webmanifest">-->
+    <!--  <link rel="mask-icon" href="assets/favicon/safari-pinned-tab.svg" color="#0e0e10">-->
+    <!--  <link rel="shortcut icon" href="assets/favicon/favicon.ico">-->
+    <meta name="theme-color" content="#000000">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.1/css/bootstrap.min.css"
+          integrity="sha512-siwe/oXMhSjGCwLn+scraPOWrJxHlUgMBMZXdPe2Tnk3I0x3ESCoLz7WZ5NTH6SZrywMY+PB1cjyqJ5jAluCOg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.2/css/boxicons.min.css"
+          integrity="sha512-AGmpdsTqvAh2GvTWzVhhJ9VqQb1eAXwOM7uiWtv0DzcnGaGWy98K51z2cK5OG3gp4NB1HbMaD7p0MeO9kE7E3w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+    <link rel="stylesheet" media="screen" href="assets/css/app.min.css">
+</head>
+<body class="no-select">
+<div class="page-loading active">
+    <div class="page-loading-inner">
+        <div class="page-logo"></div>
+        <div class="page-spinner"></div>
+    </div>
 </div>
+<div class="is-attention-splash" style="display: none">
+    <div>
+        <h3>Warning</h3>
+        <span>
+        By clicking the "I agree" button, you take responsibility for visiting and using
+      this resource.
+    </span>
+        <button type="button"
+                class="btn btn-lg btn-dark w-100 mx-0"
+                onclick="close_attention_splash()">
+            I agree
+        </button>
+    </div>
+</div>
+<main class="page-wrapper">
+    <div class="network-wait"></div>
+    <div class="video-container" id="video-container"></div>
+    <div class="other-videos-container"></div>
+    <div class="error_box_cst" id="error_box_cst_id" style="margin-bottom:-150px">
+        <p class="error_text_cst"></p>
+    </div>
+</main>
+<footer class="footer pb-4 pb-lg-5">
+    <div class="container text-center pt-lg-3">
+        <div class="navbar-brand justify-content-center text-dark mb-2 mb-lg-4">
+            <div class="me-2 stone-logo-subtext footer-logo"></div>
+        </div>
+        <div id="links-block-footer-v" class="d-flex justify-content-center pt-4 mt-lg-3"></div>
+        <p class="nav d-block fs-sm text-center pt-5 mt-lg-4 mb-0">
+            <span class="text-light" id="footer-text-blc">Designed with <i class="emoji" style="background-image:url('assets/images/emoji/red-heart.png');font-size: 0.95rem"><b>❤️</b></i> by Yaroslav Koval</span>
+        </p>
+    </div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"
+        integrity="sha512-wT7uPE7tOP6w4o28u1DN775jYjHQApdBnib5Pho4RB0Pgd9y7eSkAV1BTqQydupYDB9GBhTcQQzyNMPMV3cAew=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.1/js/bootstrap.min.js"
+        integrity="sha512-vyRAVI0IEm6LI/fVSv/Wq/d0KUfrg3hJq2Qz5FlfER69sf3ZHlOrsLriNm49FxnpUGmhx+TaJKwJ+ByTLKT+Yg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.3.2/swiper-bundle.min.js"
+        integrity="sha512-V1mUBtsuFY9SNr+ptlCQAlPkhsH0RGLcazvOCFt415od2Bf9/YkdjXxZCdhrP/TVYsPeAWuHa+KYLbjNbeEnWg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="assets/js/app.min.js"></script>
+</body>
+</html>
