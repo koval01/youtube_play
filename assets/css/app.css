@@ -290,6 +290,7 @@ video {
 .ukrainian-flag {
   height: 100%;
   width: 150%;
+  margin-left: -3rem;
   filter: blur(0.5rem) opacity(0.65);
 }
 .ukrainian-flag > .blue-line {
