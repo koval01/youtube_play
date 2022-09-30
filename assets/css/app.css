@@ -28,14 +28,8 @@ video {
 }
 
 .video-container {
-  max-width: 1000px;
-  display: inline-block;
-}
-
-.other-videos-container {
-  height: 100%;
   width: 100%;
-  display: inline-block;
+  display: block;
 }
 
 .video-meta {
@@ -44,7 +38,7 @@ video {
   padding: 20px;
 }
 .video-meta > h1 {
-  font-size: 1.2rem;
+  font-size: 1.35rem;
 }
 .video-meta > .video-tags {
   color: var(--tags-color);
@@ -287,6 +281,24 @@ video {
 .emoji > b {
   letter-spacing: 12em;
   pointer-events: none;
+}
+
+#footer-text-blc {
+  color: #adadad;
+}
+
+.ukrainian-flag {
+  height: 100%;
+  width: 150%;
+  filter: blur(0.5rem) opacity(0.65);
+}
+.ukrainian-flag > .blue-line {
+  height: 2rem;
+  background-color: #0083ff;
+}
+.ukrainian-flag > .yellow-line {
+  height: 2rem;
+  background-color: #ffd400;
 }
 
 /*# sourceMappingURL=app.css.map */
