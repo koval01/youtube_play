@@ -283,7 +283,13 @@ video {
   pointer-events: none;
 }
 
-#footer-text-blc {
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100vw !important;
+}
+
+.footer-text {
   color: #adadad;
 }
 
