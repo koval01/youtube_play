@@ -62,7 +62,7 @@ video {
 .info-box > .stat-block {
   display: inline-block;
   float: right;
-  margin-right: 1rem;
+  margin-right: 0.4rem;
 }
 .info-box > .stat-block > p {
   display: inline-block;
@@ -284,7 +284,6 @@ video {
 }
 
 .footer {
-  position: absolute;
   bottom: 0;
   width: 100vw !important;
 }

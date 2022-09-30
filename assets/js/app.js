@@ -144,7 +144,14 @@ const update_video = () => {
     notify("Please wait, receiving data...");
     
     get_video(function (data) {
-        let epoch = new Date(data.epoch * 1000);
+        let date_publish = "";
+        if (data.release_timestamp) {
+            let epoch = new Date(data.release_timestamp * 1000);
+            date_publish = `
+                <span class="dot"></span>
+                <p>${epoch.toLocaleString('default', { month: 'short' }).slice(0, 3)} ${epoch.getDay()}, ${epoch.getFullYear()}</p>
+            `;
+        }
         container.innerHTML = `
             <audio style="visibility: hidden;position: fixed;z-index: -1">
                 <source src="${data.formats.audio.url}" type="audio/mpeg">
@@ -156,11 +163,10 @@ const update_video = () => {
                 <h1>${data.title}</h1>
                 <div class="info-box">
                     <p class="views">${numberWithCommas(data.view_count)} views</p>
-                    <span class="dot"></span>
-                    <p>${epoch.toLocaleString('default', { month: 'short' }).slice(0, -1)} ${epoch.getDay()}, ${epoch.getFullYear()}</p>
+                    ${date_publish}
                     <div class="stat-block">
                         <div class="thumb-up"></div>
-                        <p>${numberWithCommas(data.like_count)}</p>
+                        <p>${data.like_count ? numberWithCommas(data.like_count) : ''}</p>
                     </div>
                 </div>
                 <p>${linkify(data.description.replaceAll("\n", "<br/>"))}</p>
