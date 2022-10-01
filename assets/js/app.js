@@ -149,7 +149,7 @@ const updateVideo = () => {
             let epoch = new Date(data.release_timestamp * 1000);
             date_publish = `
                 <span class="dot"></span>
-                <p>${epoch.toLocaleString('default', { month: 'short' }).slice(0, 3)} ${epoch.getDay()}, ${epoch.getFullYear()}</p>
+                <p>${epoch.toLocaleString('default', { month: 'short' }).slice(0, 3)} ${epoch.toLocaleString('default', { day: 'numeric' })}, ${epoch.getFullYear()}</p>
             `;
         }
         container.innerHTML = `
