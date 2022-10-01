@@ -2,11 +2,11 @@ let notify_hidden, timer_notify, video_id_link;
 let video_loading = false;
 const backend_host = "https://app-e2kzupurruxt8bx4oroby8gnga.herokuapp.com";
 
-const update_video_id_link = () => {
+const updateVideoIdLink = () => {
     let video_id = window.location.hash.slice(1);
     if (video_id_link !== video_id && video_id.length) {
         video_id_link = video_id;
-        update_video();
+        updateVideo();
     } else if (!video_id.length) {
         notify("Video ID not specified");
     }
@@ -46,7 +46,7 @@ const repeatStringNumTimes = (string, times) => {
     return repeatedString;
 }
 
-const request_call = (callback, url, method, json = false, json_body = null) => {
+const requestCall = (callback, url, method, json = false, json_body = null) => {
     let request = new XMLHttpRequest();
     let json_body_local = {};
     request.open(method, url, true);
@@ -88,20 +88,20 @@ const request_call = (callback, url, method, json = false, json_body = null) => 
     request.send(json_body_local);
 }
 
-const get_video = (callback, video_id) => {
-    request_call(
+const getVideo = (callback, video_id) => {
+    requestCall(
         function (r) {
             if (!r) {
                 notify("Application server error");
-                error_load_video();
+                errorLoadVideo();
             } else if (!r.success) {
                 notify("Server-side function error");
-                error_load_video();
+                errorLoadVideo();
             } else {
                 callback(r.body);
             }
         },
-        `${backend_host}/get_video`,
+        `${backend_host}/getVideo`,
         "POST",
         true, {
             video_id: video_id
@@ -109,29 +109,29 @@ const get_video = (callback, video_id) => {
     );
 }
 
-const update_video_observer = () => {
+const updateVideoObserver = () => {
     let video = document.querySelector("video");
     video.onpause = (event) => {
-        play_control(event);
+        playControl(event);
     };
     video.onplay = (event) => {
         video_loading = false;
-        play_control(event);
+        playControl(event);
     };
     video.onwaiting = (_) => {
         video_loading = true;
-        play_control({type: "pause"});
+        playControl({type: "pause"});
     };
     video.onplaying = (_) => {
         video_loading = false;
-        play_control({type: "play"});
+        playControl({type: "play"});
     };
 }
 
-const update_video = () => {
+const updateVideo = () => {
     let container = document.getElementById("video-container");
 
-    let get_tags = (tags) => {
+    let getTags = (tags) => {
         let tags_result = "";
         if (tags) {
             for (let tag of tags) {
@@ -143,7 +143,7 @@ const update_video = () => {
 
     notify("Please wait, receiving data...");
     
-    get_video(function (data) {
+    getVideo(function (data) {
         let date_publish = "";
         if (data.release_timestamp) {
             let epoch = new Date(data.release_timestamp * 1000);
@@ -171,10 +171,10 @@ const update_video = () => {
                 </div>
                 <p>${linkify(data.description.replaceAll("\n", "<br/>"))}</p>
                 <br/>
-                <span class="video-tags">${get_tags(data.tags)}</span>
+                <span class="video-tags">${getTags(data.tags)}</span>
             </div>
         `;
-        update_video_observer();
+        updateVideoObserver();
     }, video_id_link)
 }
 
@@ -182,36 +182,36 @@ const notify = (text) => {
     let error_box = document.querySelector(".error_box_cst");
     let error_text = document.querySelector(".error_text_cst");
 
-    let notify_hide = function () {
+    let notifyHide = function () {
         error_box.style.marginBottom = "-150px";
         notify_hidden = true;
     };
 
-    let notify_display = function () {
+    let notifyDisplay = function () {
         notify_hidden = false;
         error_text.innerHTML = text;
         error_box.style.marginBottom = "0";
     };
 
     if (notify_hidden) {
-        notify_display();
+        notifyDisplay();
     } else {
-        notify_hide();
-        setTimeout(notify_display, 200);
+        notifyHide();
+        setTimeout(notifyDisplay, 200);
     }
 
     clearTimeout(timer_notify);
-    timer_notify = setTimeout(notify_hide, 2500);
+    timer_notify = setTimeout(notifyHide, 2500);
 }
 
-const is_attention_splash = () => {
+const isAttentionSplash = () => {
     let cookie = Cookies.get('attention_close');
     if (!cookie) {
         document.querySelector(".is-attention-splash").style.display = "";
     }
 }
 
-const close_attention_splash = () => {
+const closeAttentionSplash = () => {
     let splash = document.querySelector(".is-attention-splash");
     splash.style.marginTop = "-100vh"
     setTimeout(function () {
@@ -220,7 +220,7 @@ const close_attention_splash = () => {
     Cookies.set("attention_close", "1");
 }
 
-const generate_pseudo_line = (words, sized=[5, 20]) => {
+const generatePseudoLine = (words, sized=[5, 20]) => {
     let string = "";
     for (let i = 0; i < words; i++) {
         string += repeatStringNumTimes("-", getRandomInt(sized[0], sized[1]))+"\x20";
@@ -228,12 +228,12 @@ const generate_pseudo_line = (words, sized=[5, 20]) => {
     return string
 }
 
-const error_load_video = () => {
+const errorLoadVideo = () => {
     let container = document.getElementById("video-container");
     container.innerHTML = `
         <div class="pseudo-video"></div>
         <div class="video-meta flow-lines">
-            <h1>${generate_pseudo_line(6)}</h1>
+            <h1>${generatePseudoLine(6)}</h1>
             <div class="info-box">
                 <p class="views">--------- ------</p>
                 <span class="dot"></span>
@@ -242,14 +242,14 @@ const error_load_video = () => {
                     <p>--------</p>
                 </div>
             </div>
-            <p>${generate_pseudo_line(40)}</p>
+            <p>${generatePseudoLine(40)}</p>
             <br/>
-            <span class="video-tags">${generate_pseudo_line(getRandomInt(5, 20), [3, 10])}</span>
+            <span class="video-tags">${generatePseudoLine(getRandomInt(5, 20), [3, 10])}</span>
         </div>
     `;
 }
 
-const sync_time = () => {
+const syncTime = () => {
     let video = document.querySelector("video");
     let audio = document.querySelector("audio");
 
@@ -258,18 +258,18 @@ const sync_time = () => {
     }
 }
 
-const play_control = (event) => {
+const playControl = (event) => {
     let audio = document.querySelector("audio");
 
     if (event.type === "play") {
-        sync_time();
+        syncTime();
         audio.play().then(_ => {});
     } else if (event.type === "pause") {
         audio.pause();
     }
 }
 
-const loading_finish = () => {
+const loadingFinish = () => {
     let preloader = document.querySelector(".page-loading");
     let wait = 500;
     let move_wait = 100;
@@ -282,14 +282,14 @@ const loading_finish = () => {
 }
 
 window.onload = function () {
-    loading_finish();
-    is_attention_splash();
+    loadingFinish();
+    isAttentionSplash();
     
     // default call
-    error_load_video();
+    errorLoadVideo();
 
-    update_video_id_link();
+    updateVideoIdLink();
     window.onhashchange = (_) => {
-        update_video_id_link();
+        updateVideoIdLink();
     };
 }
