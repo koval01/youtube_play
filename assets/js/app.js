@@ -1,5 +1,6 @@
 let notify_hidden, timer_notify, video_id_link;
 let video_loading = false;
+let audio_stream = true;
 const backend_host = "https://app-e2kzupurruxt8bx4oroby8gnga.herokuapp.com";
 
 const updateVideoIdLink = () => {
@@ -144,6 +145,9 @@ const updateVideo = () => {
     notify("Please wait, receiving data...");
     
     getVideo(function (data) {
+        let formats = data.formats.video;
+        let quality = formats[Object.keys(formats)[Object.keys(formats).length - 1]];
+        audio_stream = quality.acodec === "none";
         let date_publish = "";
         if (data.release_timestamp) {
             let epoch = new Date(data.release_timestamp * 1000);
@@ -157,7 +161,7 @@ const updateVideo = () => {
                 <source src="${data.formats.audio.url}" type="audio/mpeg">
             </audio>
             <video controls>
-                <source id="video-source" src="${data.formats.video.q480p.url}" type="video/mp4">
+                <source id="video-source" src="${quality.url}" type="video/mp4">
             </video>
             <div class="video-meta">
                 <h1>${data.title}</h1>
@@ -263,7 +267,11 @@ const playControl = (event) => {
 
     if (event.type === "play") {
         syncTime();
-        audio.play().then(_ => {});
+        if (audio_stream) {
+            audio.play().then(_ => {});
+        } else {
+            audio.pause();
+        }
     } else if (event.type === "pause") {
         audio.pause();
     }
