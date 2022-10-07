@@ -146,9 +146,13 @@ const updateVideo = () => {
     
     getVideo(function (data) {
         let formats = data.formats.video;
-        let quality = formats[Object.keys(formats)[Object.keys(formats).length - 1]];
-        audio_stream = quality.acodec === "none";
+        let quality = Object.keys(formats)[Object.keys(formats).length - 1];
+        let video = formats[quality];
+        audio_stream = video.acodec === "none";
         let date_publish = "";
+        console.log(
+            `${video_id_link}: Q=${quality} FPS=${video.fps} VCODEC=${video.vcodec} EXT=${video.video_ext}`
+        );
         if (data.release_timestamp) {
             let epoch = new Date(data.release_timestamp * 1000);
             date_publish = `
@@ -161,7 +165,7 @@ const updateVideo = () => {
                 <source src="${data.formats.audio.url}" type="audio/mpeg">
             </audio>
             <video controls>
-                <source id="video-source" src="${quality.url}" type="video/mp4">
+                <source id="video-source" src="${video.url}" type="video/mp4">
             </video>
             <div class="video-meta">
                 <h1>${data.title}</h1>
