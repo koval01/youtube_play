@@ -14,7 +14,7 @@ const updateVideoIdLink = () => {
 }
 
 const linkify = (inputText) => {
-    var replacedText, replacePattern1, replacePattern2, replacePattern3;
+    let replacedText, replacePattern1, replacePattern2, replacePattern3;
 
     replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
     replacedText = inputText.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
@@ -39,7 +39,7 @@ const getRandomInt = (min, max) => {
 }
 
 const repeatStringNumTimes = (string, times) => {
-    var repeatedString = "";
+    let repeatedString = "";
     while (times > 0) {
         repeatedString += string;
         times--;
