@@ -17,6 +17,10 @@ body {
   overflow-y: auto;
 }
 
+main {
+  min-height: 100vh !important;
+}
+
 video {
   position: relative;
   width: 100%;
